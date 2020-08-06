@@ -1,7 +1,8 @@
 window.addEventListener('DOMContentLoaded', event => {
     // Make a new array, board, that has 9 spots, and fill those spots with ''
-    let board = Array(9).fill('');
+    // if key is in storage, parse it as our variable, else initialize
     let count = 0;
+    let board = null;
     const player1 = "X";
     const player2 = "O";
     const gameStatus = document.getElementById("game-status");
@@ -9,6 +10,29 @@ window.addEventListener('DOMContentLoaded', event => {
     const newGameBtn = document.getElementById('new-game');
     const giveUp = document.getElementById("give-up");
     giveUp.disabled = true;
+
+    if (localStorage.getItem('board') !== null) {
+        giveUp.disabled = false;
+        board = JSON.parse(localStorage.getItem('board'));
+        console.log(board);
+        let player = true;
+        board.forEach((ele, i) => {
+            const div = document.getElementById(`square-${i}`);
+            if (ele !== ''){
+                count++;
+                if (ele === 'X') {
+                    div.innerHTML = '<img src="https://assets.aaonline.io/Module-DOM-API/formative-project-tic-tac-toe/player-x.svg">';
+                } else if (ele === 'O') {
+                    player = false;
+                    div.innerHTML = '<img src="https://assets.aaonline.io/Module-DOM-API/formative-project-tic-tac-toe/player-o.svg">';
+                }
+            }
+        });
+        console.log(count);
+    } else {
+        board = Array(9).fill('');
+        console.log(board);
+    }
 
     newGameBtn.setAttribute('disabled', 'disabled');
     let winner = false;
@@ -24,6 +48,8 @@ window.addEventListener('DOMContentLoaded', event => {
                         board[index] = player1;
                         event.target.innerHTML = '<img src="https://assets.aaonline.io/Module-DOM-API/formative-project-tic-tac-toe/player-x.svg">';
                         giveUp.disabled = false;
+                        let jsonBoard = JSON.stringify(board);
+                        localStorage.setItem('board', jsonBoard);
                         if (count > 4) {
                             checkWin();
                         }
@@ -31,6 +57,8 @@ window.addEventListener('DOMContentLoaded', event => {
                         board[index] = player2;
                         event.target.innerHTML = '<img src="https://assets.aaonline.io/Module-DOM-API/formative-project-tic-tac-toe/player-o.svg">';
                         giveUp.disabled = false;
+                        let jsonBoard = JSON.stringify(board);
+                        localStorage.setItem('board', jsonBoard);
                         if (count > 4) {
                             checkWin();
                         }
