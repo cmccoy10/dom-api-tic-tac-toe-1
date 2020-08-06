@@ -7,6 +7,7 @@ window.addEventListener('DOMContentLoaded', event => {
     const gameStatus = document.getElementById("game-status");
     const game = document.getElementById('tic-tac-toe-board');
     const newGameBtn = document.getElementById('new-game');
+    newGameBtn.setAttribute('disabled', 'disabled');
     let winner = false;
 
         game.addEventListener('click', event => {
@@ -79,6 +80,7 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
     newGame = () => {
+        newGameBtn.removeAttribute('disabled');
         newGameBtn.addEventListener('click', event => {
             // Clear Header, winner status, and board
             if (winner === false) {
