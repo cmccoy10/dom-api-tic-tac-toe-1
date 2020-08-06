@@ -87,6 +87,7 @@ window.addEventListener('DOMContentLoaded', event => {
             gameStatus.innerHTML = '';
             winner = false;
             clearBoard();
+            count = 0;
             board = Array(9).fill('');
         });
     };
