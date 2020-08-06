@@ -7,6 +7,9 @@ window.addEventListener('DOMContentLoaded', event => {
     const gameStatus = document.getElementById("game-status");
     const game = document.getElementById('tic-tac-toe-board');
     const newGameBtn = document.getElementById('new-game');
+    const giveUp = document.getElementById("give-up");
+    giveUp.disabled = true;
+
     newGameBtn.setAttribute('disabled', 'disabled');
     let winner = false;
 
@@ -20,12 +23,14 @@ window.addEventListener('DOMContentLoaded', event => {
                     if (count % 2 === 1){
                         board[index] = player1;
                         event.target.innerHTML = '<img src="https://assets.aaonline.io/Module-DOM-API/formative-project-tic-tac-toe/player-x.svg">';
+                        giveUp.disabled = false;
                         if (count > 4) {
                             checkWin();
                         }
                     } else {
                         board[index] = player2;
                         event.target.innerHTML = '<img src="https://assets.aaonline.io/Module-DOM-API/formative-project-tic-tac-toe/player-o.svg">';
+                        giveUp.disabled = false;
                         if (count > 4) {
                             checkWin();
                         }
@@ -35,6 +40,8 @@ window.addEventListener('DOMContentLoaded', event => {
             }
             }
         });
+
+
 
 
     const checkWin = () => {
@@ -79,18 +86,30 @@ window.addEventListener('DOMContentLoaded', event => {
         }
     }
 
+    const givingUp = () => {
+        if ((count - 1 % 2 === 0)){
+            gameStatus.innerHTML = `Winner: X`;
+
+        } else {
+            gameStatus.innerHTML = `Winner: O`;
+        }
+        winner = true;
+        newGame();
+    };
+
+    giveUp.addEventListener("click", givingUp);
+
     newGame = () => {
         newGameBtn.removeAttribute('disabled');
+        giveUp.disabled = true;
         newGameBtn.addEventListener('click', event => {
             // Clear Header, winner status, and board
-            if (winner === false) {
-                return;
-            }
             gameStatus.innerHTML = '';
             winner = false;
             clearBoard();
             count = 0;
             board = Array(9).fill('');
+            newGameBtn.disabled = true;
         });
     };
 
