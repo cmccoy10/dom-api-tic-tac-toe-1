@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded', event => {
     // Make a new array, board, that has 9 spots, and fill those spots with ''
     // if key is in storage, parse it as our variable, else initialize
+
     let count = 0;
     let board = null;
     const player1 = "X";
@@ -11,9 +12,9 @@ window.addEventListener('DOMContentLoaded', event => {
     const giveUp = document.getElementById("give-up");
     giveUp.disabled = true;
 
-    if (localStorage.getItem('board') !== null) {
+    if (sessionStorage.getItem('board') !== null) {
         giveUp.disabled = false;
-        board = JSON.parse(localStorage.getItem('board'));
+        board = JSON.parse(sessionStorage.getItem('board'));
         console.log(board);
         let player = true;
         board.forEach((ele, i) => {
@@ -39,6 +40,7 @@ window.addEventListener('DOMContentLoaded', event => {
 
         game.addEventListener('click', event => {
             if (winner === false){
+                console.log(event.target.id);
             if (event.target.id.includes('square')) {
                 const index = event.target.id[event.target.id.length - 1];
                 if (board[index] === '') {
@@ -49,7 +51,7 @@ window.addEventListener('DOMContentLoaded', event => {
                         event.target.innerHTML = '<img src="https://assets.aaonline.io/Module-DOM-API/formative-project-tic-tac-toe/player-x.svg">';
                         giveUp.disabled = false;
                         let jsonBoard = JSON.stringify(board);
-                        localStorage.setItem('board', jsonBoard);
+                        sessionStorage.setItem('board', jsonBoard);
                         if (count > 4) {
                             checkWin();
                         }
@@ -58,7 +60,7 @@ window.addEventListener('DOMContentLoaded', event => {
                         event.target.innerHTML = '<img src="https://assets.aaonline.io/Module-DOM-API/formative-project-tic-tac-toe/player-o.svg">';
                         giveUp.disabled = false;
                         let jsonBoard = JSON.stringify(board);
-                        localStorage.setItem('board', jsonBoard);
+                        sessionStorage.setItem('board', jsonBoard);
                         if (count > 4) {
                             checkWin();
                         }
